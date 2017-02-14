@@ -4,8 +4,8 @@ import java.awt.Color;
 public class Constant {
 	
 	
-	public static final int rows = 6;
-	public static final int cols = 6;
+	public static final int rows = 3;
+	public static final int cols = 3;
 
 	
 	//general
@@ -19,7 +19,7 @@ public class Constant {
 
 	//puzzle generator
 	//from one to 9 the lower the degree the more difficult the game gets
-	public static final int degreeOfDifficulty = 0;
+	public static final int degreeOfDifficulty = 3;
 
 	
 	//moves field
@@ -52,11 +52,11 @@ public class Constant {
 	
 	//restart button
 	public static final int widthRestartButton = 200;
-	public static final int heighRestartButton = 40;
+	public static final int heightRestartButton = 40;
 	public static final String restartButtonText = "Restart";
 	
 	
-	public static final String youWonInMoves = "Du hast gewonnen in %d Spielz�gen";
+	public static final String youWonInMoves = "Du hast gewonnen in %d Spielzügen";
 	public static final String youWonInOneMove= "Du hast gewonnen in einem Spielzug";
 	
 	

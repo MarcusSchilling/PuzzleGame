@@ -1,8 +1,6 @@
 package picture.design;
 
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
@@ -28,7 +26,7 @@ public class RestartButton {
 	}
 	
 	public void turnButtonOff() {
-		button.setEnabled(false);
+		button.setEnabled(true);
 	}
 	
 	public void turnButtonOn(){
@@ -41,7 +39,7 @@ public class RestartButton {
 	
 	private Rectangle getPositionAndSize(){
 		Rectangle rectangle = new Rectangle();
-		rectangle.setSize(widthRestartButton, heighRestartButton);
+		rectangle.setSize(widthRestartButton, heightRestartButton);
 		rectangle.setLocation(widthWindow-(margin*2+widthRestartButton), (margin));
 		return rectangle;
 	}
