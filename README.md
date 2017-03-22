@@ -11,6 +11,10 @@ Therefor change in Constant.java rows and cols size on your own the game board w
 
 And now have fun!
 
+<img width="912" alt="bildschirmfoto 2017-03-22 um 22 27 28" src="https://cloud.githubusercontent.com/assets/6787636/24222504/a8e6ff12-0f52-11e7-80cf-2170b82218d2.png">
+
+<img width="912" alt="bildschirmfoto 2017-03-22 um 22 27 09" src="https://cloud.githubusercontent.com/assets/6787636/24222507/aab3567e-0f52-11e7-8c64-e5e6a1ece84d.png">
+
 ## Technical:
 It's based on swing. That was not my decision I’m a big fan of JavaFX but the project was originally a school project so this was required! 
 So, try it out it works on both MacOS and Windows as well as on Linux!
