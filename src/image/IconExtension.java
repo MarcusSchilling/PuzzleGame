@@ -1,21 +1,20 @@
 package image;
 
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
 
-import javax.swing.ImageIcon;
+public class IconExtension extends ImageIcon {
 
-public class IconExtension extends ImageIcon{
-	
-	private static final long serialVersionUID = 1L;
-	
-	private final int targetPosition;
+    private static final long serialVersionUID = 1L;
 
-	public IconExtension(Image image ,int targetPosition) {
-		super(image);
-		this.targetPosition = targetPosition;
-	}
-	
-	public int getTargetPosition(){
-		return targetPosition;
-	}
+    private final int targetPosition;
+
+    public IconExtension(Image image, int targetPosition) {
+        super(image);
+        this.targetPosition = targetPosition;
+    }
+
+    public int getTargetPosition() {
+        return targetPosition;
+    }
 }

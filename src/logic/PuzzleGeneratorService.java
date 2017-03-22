@@ -1,10 +1,10 @@
 package logic;
 
-import javax.swing.JLabel;
+import javax.swing.*;
 
 public interface PuzzleGeneratorService {
 
-	public JLabel[][] createPuzzle();
-	
-	public int getChanges();
+    public JLabel[][] createPuzzle();
+
+    public int getChanges();
 }
