@@ -17,5 +17,5 @@ And now have fun!
 
 ## Technical:
 It's based on swing. That was not my decision I’m a big fan of JavaFX but the project was originally a school project so this was required! 
-So, try it out it works on both MacOS and Windows as well as on Linux!
+So, try it out it works on both MacOS and Windows as well as on Linux! Cross-platform!
 Have fun! 
