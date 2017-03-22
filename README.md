@@ -11,7 +11,7 @@ Therefor change in Constant.java rows and cols size on your own the game board w
 
 And now have fun!
 
-##Technical:
+## Technical:
 It's based on swing. That was not my decision I’m a big fan of JavaFX but the project was originally a school project so this was required! 
 So, try it out it works on both MacOS and Windows as well as on Linux!
 Have fun! 
