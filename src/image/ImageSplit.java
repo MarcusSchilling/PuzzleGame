@@ -49,7 +49,12 @@ public class ImageSplit {
         for (int i = 0; i < imgs.length; i++) {
             //4.modified by me
             String split = System.getProperty("file.separator");
-            ImageIO.write(imgs[i], "jpg", new File(System.getProperty("user.dir") + split + "SplitedPictures" + split + "img" + i + ".jpg"));
+            File output = new File(System.getProperty("user.dir") + split + "SplitedPictures");
+
+            output.mkdir();
+            File write = new File(System.getProperty("user.dir") + split + "SplitedPictures" + split + "img" + i + ".jpg");
+
+            ImageIO.write(imgs[i], "jpg", write);
         }
     }
 
