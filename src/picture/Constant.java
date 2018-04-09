@@ -5,63 +5,64 @@ import java.awt.*;
 public class Constant {
 
 
-    public static final int rows = 3;
-    public static final int cols = 3;
+    public static final int ROWS = 3;
+    public static final int COLS = 3;
 
 
     //general
-    public static final int margin = 10;
-    public static final int widthWindow = 800;
-    public static final int heighWindow = 800;
-    public static final Color result = new Color(51, 25, 0, 100);
-    public static final String gameTitle = "Puzzle Game";
-    public static final String keyToOpenImagePathExplorer = "F1";
+    public static final int MARGIN = 10;
+    public static final int WIDTH_WINDOW = 1000;
+    public static final int HEIGHT_WINDOW = 1000;
+    public static final Color RESULT = new Color(51, 25, 0, 100);
+    public static final String GAME_TITLE = "Puzzle Game";
+    public static final String KEY_TO_OPEN_IMAGE_PATH_EXPLORER = "F1";
 
 
     //puzzle generator
-    //from one to 9 the lower the degree the more difficult the game gets
-    public static final int degreeOfDifficulty = 3;
+    //from one to 9 the lower the degree the more easy the game gets
+    public static final int DEGREE_OF_DIFFICULTY = 3;
 
 
     //moves field
-    public static final int widthMoveField = 50;
-    public static final int heighMoveField = 50;
-    public static final int xMinPosMoveField = 10;
-    public static final int yMinPosMoveField = 10;
+    public static final int WIDTH_MOVE_FIELD = 50;
+    public static final int HEIGHT_MOVE_FIELD = 50;
+    public static final int X_MIN_POS_MOVE_FIELD = 10;
+    public static final int Y_MIN_POS_MOVE_FIELD = 10;
 
     //Field
-    public static final int heightField = 500;
-    public static final int widthField = 500;
-    public static final int minTopPositionField = 112;
-    public static final int minLeftPositionField = 106;
-    public static final int maxTopPositionField = minTopPositionField + ((heightField / cols) * (cols));
-    public static final int maxLeftPositionField = minLeftPositionField + ((widthField / rows) * (rows));
+    public static final int HEIGHT_FIELD = 700;
+    public static final int WIDTH_FIELD = 700;
+    public static final int MIN_TOP_POSITION_FIELD = 112;
+    public static final int MIN_LEFT_POSITION_FIELD = 106;
+    public static final int MAX_TOP_POSITION_FIELD = MIN_TOP_POSITION_FIELD + ((HEIGHT_FIELD / COLS) * (COLS));
+    public static final int MAX_LEFT_POSITION_FIELD = MIN_LEFT_POSITION_FIELD + ((WIDTH_FIELD / ROWS) * (ROWS));
 
     //TextField path
-    public static final int heightTextField = 30;
-    public static final int widthTextField = 400;
+    public static final int HEIGHT_TEXT_FIELD = 30;
+    public static final int WIDTH_TEXT_FIELD = 400;
 
     //Button
-    public static final int buttonHeight = 50;
-    public static final int minTopButtonPosition = 73;
-    public static final int minLeftButtonPosition = (minLeftPositionField - (margin + buttonHeight));
+    public static final int BUTTON_HEIGHT = 50;
+    public static final int MIN_TOP_BUTTON_POSITION = 73;
+    public static final int MIN_LEFT_BUTTON_POSITION = (MIN_LEFT_POSITION_FIELD - (MARGIN + BUTTON_HEIGHT));
 
-    public static final String buttonTextUp = "up";
-    public static final String buttonTextDown = "down";
-    public static final String buttonTextLeft = "<";
-    public static final String buttonTextRight = ">";
+    public static final String BUTTON_TEXT_UP = "up";
+    public static final String BUTTON_TEXT_DOWN = "down";
+    public static final String BUTTON_TEXT_LEFT = "<";
+    public static final String BUTTON_TEXT_RIGHT = ">";
 
     //restart button
-    public static final int widthRestartButton = 200;
-    public static final int heightRestartButton = 40;
-    public static final String restartButtonText = "Restart";
+    public static final int WIDTH_RESTART_BUTTON = 200;
+    public static final int HEIGHT_RESTART_BUTTON = 40;
+    public static final String RESTART_BUTTON_TEXT = "Restart";
 
 
-    public static final String youWonInMoves = "Du hast gewonnen in %d Spielzügen";
-    public static final String youWonInOneMove = "Du hast gewonnen in einem Spielzug";
+    public static final String YOU_WON_IN_MOVES = "Du hast gewonnen in %d Spielzügen";
+    public static final String YOU_WON_IN_ONE_MOVE = "Du hast gewonnen in einem Spielzug";
+    public static final String YOU_WON_IN_MIN_POSSIBLE_MOVES = "Du hast in der minimalen Anzahl an Zügen gewonnen.";
 
 
     // label min Moves test show
-    public static final int widthMinMovesLabel = 50;
-    public static final int heightMinMovesLabel = 50;
+    public static final int WIDTH_MIN_MOVES_LABEL = 50;
+    public static final int HEIGHT_MIN_MOVES_LABEL = 50;
 }

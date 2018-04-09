@@ -32,8 +32,8 @@ public class GameData {
 
     private Rectangle moves() {
         Rectangle rectangle = new Rectangle();
-        rectangle.setSize(widthMoveField, heighMoveField);
-        rectangle.setLocation(xMinPosMoveField, yMinPosMoveField);
+        rectangle.setSize(WIDTH_MOVE_FIELD, HEIGHT_MOVE_FIELD);
+        rectangle.setLocation(X_MIN_POS_MOVE_FIELD, Y_MIN_POS_MOVE_FIELD);
         return rectangle;
     }
 

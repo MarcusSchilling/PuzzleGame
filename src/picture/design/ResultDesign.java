@@ -18,17 +18,19 @@ public class ResultDesign {
     private JLabel pictureLabel;
     private Playground playground;
     private PictureGameService gameService;
+    private int minMoves;
 
-    public ResultDesign(Playground playground, PictureGameService gameService) {
+    public ResultDesign(Playground playground, PictureGameService gameService, int minMoves) {
         this.resultLabel = new JLabel();
         this.playground = playground;
         this.gameService = gameService;
         this.pictureLabel = new JLabel();
+        this.minMoves = minMoves;
     }
 
     public void drawLabels() {
         resultLabel.setBounds(getPositionAndSizeTextField());
-        resultLabel.setBackground(result);
+        resultLabel.setBackground(RESULT);
         playground.drawToContentPane(resultLabel);
         pictureLabel.setBounds(getPositionAndSizePictureField());
         playground.drawToContentPane(pictureLabel);
@@ -36,6 +38,7 @@ public class ResultDesign {
     }
 
     public void fillLabelsWithGameResult() {
+        resultLabel.setText("");
         resultLabel.setText(resultContent());
         fillPicture();
     }
@@ -55,25 +58,28 @@ public class ResultDesign {
 
     private Rectangle getPositionAndSizeTextField() {
         Rectangle rectangle = new Rectangle();
-        rectangle.setSize(widthField, heightField);
-        rectangle.setLocation(minLeftPositionField, minTopPositionField);
+        rectangle.setSize(WIDTH_FIELD, HEIGHT_FIELD);
+        rectangle.setLocation(MIN_LEFT_POSITION_FIELD, MIN_TOP_POSITION_FIELD);
         return rectangle;
     }
 
     private Rectangle getPositionAndSizePictureField() {
         Rectangle rectangle = new Rectangle();
-        int x = (int) (minLeftPositionField + (double) (widthField / 2) - margin);
-        int y = (int) (minTopPositionField + (double) (heightField * (1.0 / 4.0)));
+        int x = (int) (MIN_LEFT_POSITION_FIELD + (double) (WIDTH_FIELD / 2) - MARGIN);
+        int y = (int) (MIN_TOP_POSITION_FIELD + (double) (HEIGHT_FIELD * (1.0 / 4.0)));
         rectangle.setLocation(x, y);
-        rectangle.setSize(widthField / 2, heightField / 2);
+        rectangle.setSize(WIDTH_FIELD / 2, HEIGHT_FIELD / 2);
         return rectangle;
     }
 
     private String resultContent() {
-        if (1 == gameService.getMoves()) {
-            return youWonInOneMove;
+        assert gameService.getMoves() >= minMoves;
+        if (gameService.getMoves() == minMoves) {
+            return YOU_WON_IN_MIN_POSSIBLE_MOVES;
+        } else if (1 == gameService.getMoves()) {
+            return YOU_WON_IN_ONE_MOVE;
         } else {
-            return String.format(youWonInMoves, gameService.getMoves());
+            return String.format(YOU_WON_IN_MOVES, gameService.getMoves());
         }
     }
 

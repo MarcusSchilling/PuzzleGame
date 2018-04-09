@@ -16,7 +16,7 @@ public class ButtonField {
 
     private ActionListenerFactory actionListenerFactory;
 
-    public ButtonField(ButtonsHandler buttonsHandler, Playground playground) {
+    public ButtonField(Playground playground) {
         actionListenerFactory = new ActionListenerFactory(playground);
     }
 
@@ -24,7 +24,7 @@ public class ButtonField {
         if (direction == LEFT || direction == RIGHT) {
             throw new IllegalArgumentException();
         }
-        String buttonText = (direction == UP) ? buttonTextUp : buttonTextDown;
+        String buttonText = (direction == UP) ? BUTTON_TEXT_UP : BUTTON_TEXT_DOWN;
         Rectangle positionAndSize = (direction == UP) ? positionButtonUp(s) : positionButtonDown(s);
         ActionListener actionListener = actionListenerFactory.getActionListener(direction, s);
         JButton button = new JButton(buttonText);
@@ -37,11 +37,11 @@ public class ButtonField {
         if (direction == UP || direction == DOWN) {
             throw new IllegalArgumentException();
         }
-        String buttonText = (direction == LEFT) ? buttonTextLeft : buttonTextRight;
+        String buttonText = (direction == LEFT) ? BUTTON_TEXT_LEFT : BUTTON_TEXT_RIGHT;
         JButton button = new JButton(buttonText);
         Rectangle positionAndSize = (direction == LEFT) ? invert(positionButtonUp(s)) : invert(positionButtonDown(s));
         positionAndSize.setSize((int) positionAndSize.getSize().getWidth(), calculateHeightRightLeftField());
-        positionAndSize.x = (direction == LEFT) ? minLeftButtonPosition : (minLeftButtonPosition + widthField + buttonHeight + (2 * margin));
+        positionAndSize.x = (direction == LEFT) ? MIN_LEFT_BUTTON_POSITION : (MIN_LEFT_BUTTON_POSITION + WIDTH_FIELD + BUTTON_HEIGHT + (2 * MARGIN));
         positionAndSize.y = calculateYRightLeft(s);
         button.setBounds(positionAndSize);
         button.addActionListener(actionListenerFactory.getActionListener(direction, s));
@@ -50,26 +50,26 @@ public class ButtonField {
 
     private Rectangle positionButtonUp(int i) {
         Rectangle rec = new Rectangle();
-        rec.setSize((widthField / cols), buttonHeight);
-        int x = minLeftPositionField + (((widthField) / cols) * i);
-        rec.setLocation(x, minTopButtonPosition - 20);
+        rec.setSize((WIDTH_FIELD / COLS), BUTTON_HEIGHT);
+        int x = MIN_LEFT_POSITION_FIELD + (((WIDTH_FIELD) / COLS) * i);
+        rec.setLocation(x, MIN_TOP_BUTTON_POSITION - 20);
         return rec;
     }
 
     private Rectangle positionButtonDown(int i) {
         Rectangle rec = new Rectangle();
-        rec.setSize((widthField / cols), buttonHeight);
-        int x = minLeftPositionField + (((widthField) / cols) * i);
-        rec.setLocation(x, minTopButtonPosition + heightField + buttonHeight + margin);
+        rec.setSize((WIDTH_FIELD / COLS), BUTTON_HEIGHT);
+        int x = MIN_LEFT_POSITION_FIELD + (((WIDTH_FIELD) / COLS) * i);
+        rec.setLocation(x, MIN_TOP_BUTTON_POSITION + HEIGHT_FIELD + BUTTON_HEIGHT + MARGIN);
         return rec;
     }
 
     private int calculateHeightRightLeftField() {
-        return (int) ((double) heightField / (double) rows);
+        return (int) ((double) HEIGHT_FIELD / (double) ROWS);
     }
 
     private int calculateYRightLeft(int i) {
-        return (int) (minTopPositionField + ((double) i / rows) * (double) heightField);
+        return (int) (MIN_TOP_POSITION_FIELD + ((double) i / ROWS) * (double) HEIGHT_FIELD);
     }
 
     private Rectangle invert(Rectangle rectangle) {

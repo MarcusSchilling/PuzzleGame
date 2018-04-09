@@ -5,22 +5,14 @@ import util.Array;
 import util.UtilizationService;
 
 import javax.swing.*;
-import java.util.List;
 
 public class PictureGameService implements UtilizationService {
 
-    private List<ImageIcon> imagesCorrect;
     private JLabel[][] fields;
 
     private int moves = 0;
 
-    public PictureGameService(List<ImageIcon> imagesCorrect) {
-        this.imagesCorrect = imagesCorrect;
-        this.fields = picture.design.Pictures.fields;
-    }
-
-    public PictureGameService(List<ImageIcon> imagesCorrect, JLabel[][] field) {
-        this.imagesCorrect = imagesCorrect;
+    public PictureGameService(JLabel[][] field) {
         this.fields = field;
     }
 
@@ -34,20 +26,13 @@ public class PictureGameService implements UtilizationService {
 
     @Override
     public boolean isCorrect() {
-        int count = 0;
-        for (JLabel jLabels : Array.twoDimensionIntoOne(fields)) {
-            if (!compareIcon(jLabels.getIcon(), (Icon) imagesCorrect.get(count))) {
+        JLabel[] labels = Array.twoDimensionIntoOne(fields);
+        for (int i = 0; i < labels.length; i++) {
+            if (((IconExtension) labels[i].getIcon()).getTargetPosition() != i) {
                 return false;
             }
-            count++;
         }
         return true;
-    }
-
-    private boolean compareIcon(Icon first, Icon second) {
-        IconExtension firstIm = (IconExtension) first;
-        IconExtension secondIm = (IconExtension) second;
-        return firstIm.getTargetPosition() == secondIm.getTargetPosition();
     }
 
     public void resetGameService() {
@@ -55,7 +40,4 @@ public class PictureGameService implements UtilizationService {
     }
 
 
-    public void setImagesCorrect(List<ImageIcon> imagesCorrect) {
-        this.imagesCorrect = imagesCorrect;
-    }
 }

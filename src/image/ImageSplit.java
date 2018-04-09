@@ -28,17 +28,17 @@ public class ImageSplit {
         FileInputStream fis = new FileInputStream(file);
 
         //2. Magic each picture can be used
-        BufferedImage image = getScaledImage(ImageIO.read(fis), widthField, heightField); //reading the image file
+        BufferedImage image = getScaledImage(ImageIO.read(fis), WIDTH_FIELD, HEIGHT_FIELD); //reading the image file
 
         //3. customization for the specific project 
-        int chunks = rows * cols;
-        int chunkWidth = image.getWidth() / cols; // determines the chunk width and height
-        int chunkHeight = image.getHeight() / rows;
+        int chunks = ROWS * COLS;
+        int chunkWidth = image.getWidth() / COLS; // determines the chunk width and height
+        int chunkHeight = image.getHeight() / ROWS;
 
         int count = 0;
         BufferedImage imgs[] = new BufferedImage[chunks];
-        for (int x = 0; x < rows; x++) {
-            for (int y = 0; y < cols; y++) {
+        for (int x = 0; x < ROWS; x++) {
+            for (int y = 0; y < COLS; y++) {
                 imgs[count] = new BufferedImage(chunkWidth, chunkHeight, image.getType());
                 Graphics2D gr = imgs[count++].createGraphics();
                 gr.drawImage(image, 0, 0, chunkWidth, chunkHeight, chunkWidth * y, chunkHeight * x, chunkWidth * y + chunkWidth, chunkHeight * x + chunkHeight, null);
@@ -48,12 +48,15 @@ public class ImageSplit {
 
         for (int i = 0; i < imgs.length; i++) {
             //4.modified by me
-            ImageIO.write(imgs[i], "jpg", new File(System.getProperty("user.dir") + "//SplitedPictures//" + "img" + i + ".jpg"));
+            String split = System.getProperty("file.separator");
+            ImageIO.write(imgs[i], "jpg", new File(System.getProperty("user.dir") + split + "SplitedPictures" + split + "img" + i + ".jpg"));
         }
     }
 
     public static File getFileInProjectDir(String path) {
-        return new File(System.getProperty("user.dir") + "//Picture//" + path + ".jpg");
+        String split = System.getProperty("file.separator");
+
+        return new File(System.getProperty("user.dir") + split + "Picture" + split + path + ".jpg");
     }
 
     public static File getFile(String path) {
@@ -65,18 +68,18 @@ public class ImageSplit {
         if (isGlobalPath) {
             imageIcon = ImageIO.read(getFile(path));
         } else {
-            System.out.println(getFileInProjectDir(path).getAbsolutePath());
             imageIcon = (ImageIO.read(getFileInProjectDir(path)));
         }
         return imageIcon;
     }
 
 
-    public static ImageIcon[] loadImages() throws Exception {
-        ImageIcon[] images = new ImageIcon[rows * cols];
-        for (int j = 0; j < (rows * cols); j++) {
+    public static ImageIcon[] loadImages() throws IOException {
+        String split = System.getProperty("file.separator");
+        ImageIcon[] images = new ImageIcon[ROWS * COLS];
+        for (int j = 0; j < (ROWS * COLS); j++) {
             images[j] = new IconExtension(ImageIO.read(new File(
-                    System.getProperty("user.dir") + "//SplitedPictures//" + "img" + j + ".jpg")), j);
+                    System.getProperty("user.dir") + split + "SplitedPictures" + split + "img" + j + ".jpg")), j);
         }
         return images;
     }

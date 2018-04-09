@@ -34,12 +34,16 @@ public class CustomPicturePath {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyText(e.getKeyCode()).equals(keyToOpenImagePathExplorer)) {
-                    ImagePath.setImgPathGlobal(true);
-                    ImagePath.setImgPath(String.valueOf(picture.getUserChoosedFile()));
+                if (KeyEvent.getKeyText(e.getKeyCode()).equals(KEY_TO_OPEN_IMAGE_PATH_EXPLORER) && !playground.inGame()) {
+                    openExplorerForPicturePath();
                 }
             }
         });
+    }
+
+    public void openExplorerForPicturePath() {
+        ImagePath.setImgPathGlobal(true);
+        ImagePath.setImgPath(String.valueOf(picture.getUserChoosedFile()));
     }
 
     public void drawTextArea() {
@@ -49,7 +53,7 @@ public class CustomPicturePath {
 
     public File getPath() throws FileNotFoundException {
         String path = textArea.getText();
-        path.replace("\\", "//");
+        path = path.replace("\\", "//");
         File file = new File(path);
         if (file.isFile() && !file.isHidden()) {
             return file;
@@ -60,26 +64,24 @@ public class CustomPicturePath {
 
     private Rectangle textAreaPositionAndSize() {
         Rectangle rectangle = new Rectangle();
-        rectangle.setSize(widthField, heightTextField);
+        rectangle.setSize(WIDTH_FIELD, HEIGHT_TEXT_FIELD);
         rectangle.setLocation(xMinPos(), yMinPos());
         return rectangle;
     }
 
     private int yMinPos() {
-        int y = yMinPosMoveField + margin;
-        return y;
+        return Y_MIN_POS_MOVE_FIELD + MARGIN;
     }
 
     private int xMinPos() {
-        int x = xMinPosMoveField + widthMoveField + margin;
-        return x;
+        return X_MIN_POS_MOVE_FIELD + WIDTH_MOVE_FIELD + MARGIN;
     }
 
     public void enableTextArea() {
         textArea.setEditable(true);
     }
 
-    public void diableTextArea() {
+    public void disableTextArea() {
         textArea.setEditable(false);
     }
 

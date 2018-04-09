@@ -9,32 +9,54 @@ import static picture.design.Pictures.fields;
 public class ManipulateField {
 
     public static void exchangeIcons(JLabel[] labels, Direction direction) {
-        if (direction == Direction.LEFT) {
-            exchangeLeft(labels);
-        } else if (direction == Direction.RIGHT) {
-            exchangeRight(labels);
-        } else if (direction == Direction.DOWN) {
-            exchangeRight(labels);
-            Array.transpose(fields);
-        } else if (direction == Direction.UP) {
-            exchangeLeft(labels);
-            Array.transpose(fields);
+        switch (direction) {
+            case LEFT:
+                exchangeLeft(labels);
+                break;
+            case RIGHT:
+                exchangeRight(labels);
+                break;
+            case DOWN:
+                exchangeRight(labels);
+                Array.transpose(fields);
+                break;
+            case UP:
+                exchangeLeft(labels);
+                Array.transpose(fields);
+                break;
         }
     }
 
     public static JLabel[][] exchangeIconsVirtual(JLabel[][] labels, int rowCol, Direction direction) {
-        if (direction == Direction.LEFT) {
-            exchangeLeft(labels[rowCol]);
-        } else if (direction == Direction.RIGHT) {
-            exchangeRight(labels[rowCol]);
-        } else if (direction == Direction.DOWN) {
-            Array.transpose(labels);
-            exchangeRight(labels[rowCol]);
-            Array.transpose(labels);
-        } else if (direction == Direction.UP) {
-            Array.transpose(labels);
-            exchangeLeft(labels[rowCol]);
-            Array.transpose(labels);
+        switch (direction) {
+            case LEFT: {
+                JLabel[] jLabels = exchangeLeft(labels[rowCol]);
+                JLabel[][] clone = labels.clone();
+                clone[rowCol] = jLabels;
+                return clone;
+            }
+            case RIGHT: {
+                JLabel[] jLabels = exchangeRight(labels[rowCol]);
+                JLabel[][] clone = labels.clone();
+                clone[rowCol] = jLabels;
+                return clone;
+            }
+            case DOWN: {
+                JLabel[][] transpose = Array.transpose(labels);
+                JLabel[] jLabels = exchangeRight(labels[rowCol]);
+                JLabel[][] clone = transpose.clone();
+                clone[rowCol] = jLabels;
+                Array.transpose(labels);
+                return Array.transpose(clone);
+            }
+            case UP: {
+                JLabel[][] transpose = Array.transpose(labels);
+                JLabel[] jLabels = exchangeLeft(labels[rowCol]);
+                JLabel[][] clone = transpose.clone();
+                clone[rowCol] = jLabels;
+                Array.transpose(labels);
+                return Array.transpose(clone);
+            }
         }
         return labels;
     }

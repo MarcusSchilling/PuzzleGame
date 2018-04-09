@@ -21,12 +21,12 @@ public class RestartButton {
 
     public void drawButton() {
         button.setBounds(getPositionAndSize());
-        button.setText(restartButtonText);
+        button.setText(RESTART_BUTTON_TEXT);
         playground.drawToContentPane(button);
     }
 
     public void turnButtonOff() {
-        button.setEnabled(true);
+        button.setEnabled(false);
     }
 
     public void turnButtonOn() {
@@ -39,8 +39,8 @@ public class RestartButton {
 
     private Rectangle getPositionAndSize() {
         Rectangle rectangle = new Rectangle();
-        rectangle.setSize(widthRestartButton, heightRestartButton);
-        rectangle.setLocation(widthWindow - (margin * 2 + widthRestartButton), (margin));
+        rectangle.setSize(WIDTH_RESTART_BUTTON, HEIGHT_RESTART_BUTTON);
+        rectangle.setLocation(WIDTH_WINDOW - (MARGIN * 2 + WIDTH_RESTART_BUTTON), (MARGIN));
         return rectangle;
     }
 

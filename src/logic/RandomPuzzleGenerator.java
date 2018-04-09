@@ -3,62 +3,66 @@ package logic;
 import util.Array;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-import static picture.Constant.cols;
-import static picture.Constant.rows;
+import static picture.Constant.*;
 
 public class RandomPuzzleGenerator implements PuzzleGeneratorService {
 
     private final Random random;
     private final JLabel[][] field;
     private int changes;
+    private List<Direction> generatedPath = new ArrayList<>();
 
 
     public RandomPuzzleGenerator(JLabel[][] field) {
-        random = new Random();
+        this.random = new Random();
         this.field = field;
     }
 
-    public JLabel[][] createPuzzle() {
-        do {
-            changes++;
+    public void createPuzzle() {
+        changes = DEGREE_OF_DIFFICULTY;
+        for (int i = 0; i < changes; i++) {
             if (random.nextBoolean()) {
                 transposeShuffle();
             } else {
                 shuffleRightLeft();
             }
-        } while (random.nextInt(10 * ((rows + cols) / 2)) > 1);
-        return field;
+        }
     }
 
     private void transposeShuffle() {
         JLabel[][] label = Array.transpose(field);
-        int timesChange = random.nextInt(rows);
-        int row = random.nextInt(rows);
+        int row = random.nextInt(ROWS);
 
         if (random.nextBoolean()) {
-            for (int i = 0; i < timesChange; i++) {
-                ManipulateField.exchangeIcons(label[row], Direction.LEFT);
-            }
+            ManipulateField.exchangeIcons(label[row], Direction.LEFT);
+            Direction direction = Direction.LEFT;
+            direction.setColsOrRow(row);
+            generatedPath.add(direction);
         } else {
-            for (int i = 0; i < timesChange; i++) {
-                ManipulateField.exchangeIcons(label[row], Direction.RIGHT);
-            }
+            ManipulateField.exchangeIcons(label[row], Direction.RIGHT);
+            Direction direction = Direction.RIGHT;
+            direction.setColsOrRow(row);
+            generatedPath.add(direction);
+
         }
     }
 
     private void shuffleRightLeft() {
-        int timesChange = random.nextInt(cols);
-        int column = random.nextInt(cols);
+        int column = random.nextInt(COLS);
         if (random.nextBoolean()) {
-            for (int i = 0; i < timesChange; i++) {
-                ManipulateField.exchangeIcons(field[column], Direction.UP);
-            }
+            ManipulateField.exchangeIcons(field[column], Direction.UP);
+            Direction direction = Direction.UP;
+            direction.setColsOrRow(column);
+            generatedPath.add(direction);
         } else {
-            for (int i = 0; i < timesChange; i++) {
-                ManipulateField.exchangeIcons(field[column], Direction.DOWN);
-            }
+            ManipulateField.exchangeIcons(field[column], Direction.DOWN);
+            Direction direction = Direction.DOWN;
+            direction.setColsOrRow(column);
+            generatedPath.add(direction);
         }
     }
 
@@ -66,4 +70,7 @@ public class RandomPuzzleGenerator implements PuzzleGeneratorService {
         return changes;
     }
 
+    public List<Direction> getGeneratedPath() {
+        return generatedPath;
+    }
 }

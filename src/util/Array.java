@@ -37,12 +37,10 @@ public class Array {
         return transformedLabels;
     }
 
-    public static int sizeArray(JLabel[][] labels) {
+    private static int sizeArray(JLabel[][] labels) {
         int count = 0;
         for (JLabel[] la : labels) {
-            for (JLabel jLabel : la) {
-                count++;
-            }
+            count += la.length;
         }
         return count;
     }

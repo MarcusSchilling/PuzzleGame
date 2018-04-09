@@ -1,106 +1,75 @@
 package logic;
 
-import picture.Constant;
+import picture.design.Pictures;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PuzzleSolver {
 
 
     private final JLabel[][] field;
     private final PictureGameService gameService;
-    private final List<Integer> list;
     private int best;
+    private final PuzzleGeneratorService puzzleGeneratorService;
+    private List<Direction> minPath;
 
-    public PuzzleSolver(final JLabel[][] field, PuzzleGeneratorService puzzleGenerator) {
+
+
+    public PuzzleSolver(final JLabel[][] field, PuzzleGeneratorService puzzleGenerator) throws RuntimeException {
         this.field = field;
-        this.gameService = new PictureGameService(getImages(), field);
-        best = puzzleGenerator.getChanges();
-        this.list = new ArrayList<Integer>();
+        this.gameService = new PictureGameService(Pictures.fields);
+        this.best = puzzleGenerator.getChanges();
+        this.puzzleGeneratorService = puzzleGenerator;
     }
-
-    private List<ImageIcon> getImages() {
-        List<ImageIcon> images = new ArrayList<ImageIcon>();
-        for (JLabel[] jLabels : field) {
-            for (JLabel jLabel : jLabels) {
-                images.add((ImageIcon) jLabel.getIcon());
-            }
-        }
-        return images;
-    }
-
 
     public int solve() {
-        best++;
-        solve(field, 0, best);
-
-        for (int change : list) {
-            if (best > change) {
-                this.best = change;
-            }
+        best = puzzleGeneratorService.getChanges();
+        if (gameService.isCorrect()) {
+            return 0;
         }
-
+        ArrayList<Direction> directions = new ArrayList<>();
+        if (best < 2) {
+            return best;
+        }
+        solve(field, directions);
         return best;
     }
 
-    public boolean solve(JLabel[][] field, int currentChanges, int maxChanges) {
+    public void solve(JLabel[][] field, List<Direction> directions) {
+        int currentSize = directions.size();
+        if (currentSize >= best) {
+            return;
+        }
         if (gameService.isCorrect()) {
-            if (currentChanges < maxChanges) {
-                System.out.println("solution: " + currentChanges);
-                addSolution(currentChanges);
-            }
-            return true;
+            best = currentSize;
+            Optional<String> reduce = directions.stream()
+                    .map(Enum::toString)
+                    .reduce((s, s2) -> s + " " + s2);
+            System.out.println(reduce.toString());
+            minPath = directions;
+            System.out.println(reduce);
+            return;
         }
-
-        if (currentChanges < maxChanges) {
-            for (int column = 0; column < Constant.cols; column++) {
-                ManipulateField.exchangeIconsVirtual(field, column, Direction.LEFT);
-                if (currentChanges + 1 < maxChanges && solve(field, currentChanges + 1, maxChanges)) {
-                    if (currentChanges + 1 < maxChanges) {
-                        maxChanges = currentChanges + 1;
-                        return true;
-                    }
-                }
-                for (int i = 0; i < 2; i++) {
-                    ManipulateField.exchangeIconsVirtual(field, column, Direction.RIGHT);
-                }
-
-                if (currentChanges + 1 < maxChanges && solve(field, currentChanges + 1, maxChanges)) {
-                    if (currentChanges + 1 < maxChanges) {
-                        maxChanges = currentChanges + 1;
-                        return true;
-                    }
-                }
-                ManipulateField.exchangeIconsVirtual(field, column, Direction.LEFT);
-
+        if (currentSize >= best - 1) {
+            return;
+        }
+        for (Direction direction : Direction.values()) {
+            int border;
+            if (direction == Direction.DOWN || direction == Direction.UP) {
+                border = field.length;
+            } else {
+                border = field[0].length;
             }
-            for (int row = 0; row < Constant.rows; row++) {
-                ManipulateField.exchangeIconsVirtual(field, row, Direction.UP);
-                if (currentChanges + 1 < maxChanges && solve(field, currentChanges + 1, maxChanges)) {
-                    if (currentChanges + 1 < maxChanges) {
-                        maxChanges = currentChanges + 1;
-                        return true;
-                    }
-                }
-                for (int i = 0; i < 2; i++) {
-                    ManipulateField.exchangeIconsVirtual(field, row, Direction.DOWN);
-                }
-                if (currentChanges + 1 < maxChanges && solve(field, currentChanges + 1, maxChanges)) {
-                    if (currentChanges + 1 < maxChanges)
-                        return true;
-
-                }
-                ManipulateField.exchangeIconsVirtual(field, row, Direction.UP);
+            for (int i = 0; i < border; i++) {
+                JLabel[][] jLabels = ManipulateField.exchangeIconsVirtual(field, i, direction);
+                direction.setColsOrRow(i);
+                List<Direction> collect = new ArrayList<>(directions);
+                collect.add(direction);
+                solve(jLabels, collect);
             }
         }
-        return false;
     }
-
-
-    private void addSolution(int moves) {
-        list.add(moves);
-    }
-
 }

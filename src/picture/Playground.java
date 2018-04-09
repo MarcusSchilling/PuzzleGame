@@ -7,14 +7,16 @@ import logic.PuzzleSolver;
 import logic.RandomPuzzleGenerator;
 import picture.design.*;
 import run.Picture;
+import util.OpenDialogClosed;
 import util.SetupInspection;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static picture.design.Pictures.fields;
+import static picture.Constant.DEGREE_OF_DIFFICULTY;
 
 public class Playground {
 
@@ -34,34 +36,48 @@ public class Playground {
     private CustomPicturePath picturePath;
     private boolean inGame;
 
-    public Playground(Picture picture, String imgPathIn) throws Exception {
+    public Playground(Picture picture) throws Exception {
         SetupInspection setupInspection = new SetupInspection();
-        inGame = true;
-        surface = (JFrame) picture;
+        this.inGame = true;
+        this.surface = picture;
         this.picture = picture;
-        ImagePath.setImgPath(imgPathIn);
-        ImageSplit.split(ImagePath.getImgPath(), false);
-        images = Arrays.asList(ImageSplit.loadImages());
-        gameService = new PictureGameService(Arrays.asList(ImageSplit.loadImages()));
-        pictures = new Pictures(this);
-        pictures.addPlayingField();
-        gameData = new GameData(this, gameService);
-        gameData.drawMoveField();
-        buttons = new ButtonsHandler(this, gameService, gameData);
-        buttons.addButtons();
-        resultDesign = new ResultDesign(this, gameService);
-        restartButton = new RestartButton(this);
-        restartButton.drawButton();
-        picturePath = new CustomPicturePath(this, picture);
-        picturePath.drawTextArea();
-        picturePath.diableTextArea();
-        puzzleGenerator = new RandomPuzzleGenerator(Pictures.fields);
+        this.images = Arrays.asList(ImageSplit.loadImages());
+        this.pictures = new Pictures(this);
+        this.pictures.addPlayingField();
+        this.gameService = new PictureGameService(Pictures.fields);
+        this.gameData = new GameData(this, gameService);
+        this.gameData.drawMoveField();
+        this.buttons = new ButtonsHandler(this);
+        this.buttons.addButtons();
+        this.restartButton = new RestartButton(this);
+        this.restartButton.drawButton();
+        this.picturePath = new CustomPicturePath(this, picture);
+        this.picturePath.drawTextArea();
+        this.picturePath.disableTextArea();
+        this.puzzleGenerator = new RandomPuzzleGenerator(Pictures.fields);
     }
 
     public void startGame() {
+        int minMovesForSolvingPuzzle;
         inGame = true;
-        picturePath.diableTextArea();
+        setImagePath();
+        buttons.turnButtonsOn();
+        pictures.makeFieldsVisible();
+        pictures.actualizeImages(images);
+        gameService.resetGameService();
+        PuzzleSolver solver = new PuzzleSolver(Pictures.fields, puzzleGenerator);
+        do {
+            puzzleGenerator.createPuzzle();
+            minMovesForSolvingPuzzle = solver.solve();
+        } while (minMovesForSolvingPuzzle != DEGREE_OF_DIFFICULTY);
+        gameData.actualizeMovesFieldText();
+        resultDesign = new ResultDesign(this, gameService, minMovesForSolvingPuzzle);
+        resetDesign();
+    }
+
+    private void setImagePath() {
         try {
+            picturePath.disableTextArea();
             if (!ImagePath.isGlobal()) {
                 ImagePath.setImgPath(picturePath.getPath().toString());
                 ImagePath.setImgPathGlobal(true);
@@ -69,29 +85,21 @@ public class Playground {
             } else {
                 loadImage(true);
             }
-        } catch (Exception e) {
-
+        } catch (IOException e) {
+            CustomPicturePath customPicturePath = new CustomPicturePath(this, picture);
+            try {
+                customPicturePath.openExplorerForPicturePath();
+            } catch (OpenDialogClosed openDialogClosed) {
+                return;
+            }
+            ImagePath.setImgPathGlobal(true);
+            setImagePath();
         }
-        resetDesign();
-        buttons.turnButtonsOn();
-        pictures.makeFieldsVisible();
-        pictures.actualizeImages(images);
-        gameService.resetGameService();
-        gameData.actualizeMovesFieldText();
-        puzzleGenerator.createPuzzle();
-        // as long as the puzzle is the same as the result the game doesn't starts
-        if (gameService.isCorrect()) {
-            startGame();
-        }
-        PuzzleSolver solver = new PuzzleSolver(fields, puzzleGenerator);
-        System.out.println("Solved in " + solver.solve());
-        System.out.println("Created with " + puzzleGenerator.getChanges() + "moves");
     }
 
-    private void loadImage(boolean isGlobalPath) throws Exception {
+    private void loadImage(boolean isGlobalPath) throws IOException {
         ImageSplit.split(ImagePath.getImgPath(), isGlobalPath);
         images = Arrays.asList(ImageSplit.loadImages());
-        gameService.setImagesCorrect(Arrays.asList(ImageSplit.loadImages()));
         picture.setImageFavicon(ImageSplit.loadFullImage(ImagePath.getImgPath(), isGlobalPath));
     }
 
@@ -116,10 +124,6 @@ public class Playground {
 
     public void drawToContentPane(Component comp) {
         surface.getContentPane().add(comp);
-    }
-
-    protected void removeFromContentPane(Component comp) {
-        surface.remove(comp);
     }
 
     public void evaluation() {

@@ -3,7 +3,6 @@ package logic;
 import picture.Playground;
 import util.Array;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static logic.Direction.LEFT;
@@ -21,12 +20,7 @@ public class ActionListenerFactory {
     }
 
     public static ActionListener getActionListnerRestart(final Playground playground) {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                playground.startGame();
-            }
-        };
+        return e -> playground.startGame();
     }
 
     public ActionListener getActionListener(Direction direction, int s) {
@@ -45,25 +39,18 @@ public class ActionListenerFactory {
     }
 
     private void rightOrLeftButton(final int s, final Direction direction) {
-        this.actionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(direction.toString());
-                ManipulateField.exchangeIcons(fields[s], direction);
-                playground.buttonExecution();
-            }
+        this.actionListener = e -> {
+            System.out.println(direction.toString());
+            ManipulateField.exchangeIcons(fields[s], direction);
+            playground.buttonExecution();
         };
     }
 
     private void bottomOrTopButton(final int s, final Direction direction) {
-        this.actionListener = new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(direction.toString());
-                ManipulateField.exchangeIcons(Array.transpose(fields)[s], direction);
-                playground.buttonExecution();
-            }
+        this.actionListener = e -> {
+            System.out.println(direction.toString());
+            ManipulateField.exchangeIcons(Array.transpose(fields)[s], direction);
+            playground.buttonExecution();
         };
     }
 

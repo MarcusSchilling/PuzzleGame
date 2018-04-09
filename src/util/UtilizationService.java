@@ -5,5 +5,5 @@ package util;
  */
 public interface UtilizationService {
 
-    public boolean isCorrect();
+    boolean isCorrect();
 }

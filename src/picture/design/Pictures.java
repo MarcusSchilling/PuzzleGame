@@ -10,7 +10,7 @@ import static picture.Constant.*;
 
 public class Pictures {
 
-    public final static JLabel[][] fields = new JLabel[rows][cols];
+    public static final JLabel[][] fields = new JLabel[ROWS][COLS];
     private Playground playground;
 
     public Pictures(Playground playground) {
@@ -21,10 +21,10 @@ public class Pictures {
         int horizontalPosition = 0;
         int verticalPosition = 0;
         for (JLabel[] jLabels : fields) {
-            for (JLabel jLabel : jLabels) {
-                jLabel = new JLabel("");
-                jLabel.setBounds(positionFields(horizontalPosition, verticalPosition));
-                fields[verticalPosition][horizontalPosition] = jLabel;
+            for (int i = 0; i < jLabels.length; i++) {
+                jLabels[i] = new JLabel("");
+                jLabels[i].setBounds(positionFields(horizontalPosition, verticalPosition));
+                fields[verticalPosition][horizontalPosition] = jLabels[i];
                 horizontalPosition++;
             }
             horizontalPosition = 0;
@@ -36,18 +36,16 @@ public class Pictures {
 
     private Rectangle positionFields(double horizontalPosition, double verticalPosition) {
         Rectangle rec = new Rectangle((int) x(horizontalPosition), (int) y(verticalPosition),
-                (widthField / cols), (heightField / rows));
+                (WIDTH_FIELD / COLS), (HEIGHT_FIELD / ROWS));
         return rec;
     }
 
     private double x(double horizontalPosition) {
         double x;
         if (horizontalPosition == 0) {
-            x = minLeftPositionField;
+            x = MIN_LEFT_POSITION_FIELD;
         } else {
-            x = minLeftPositionField +
-                    ((double) (horizontalPosition) / (cols)) *
-                            ((maxLeftPositionField) - minLeftPositionField);
+            x = MIN_LEFT_POSITION_FIELD + (horizontalPosition / (COLS)) * ((MAX_LEFT_POSITION_FIELD) - MIN_LEFT_POSITION_FIELD);
         }
         return x;
     }
@@ -55,10 +53,9 @@ public class Pictures {
     private double y(double verticalPosition) {
         double y;
         if (verticalPosition == 0) {
-            y = minTopPositionField;
+            y = MIN_TOP_POSITION_FIELD;
         } else {
-            y = minTopPositionField +
-                    (((double) ((verticalPosition) / (rows))) * ((maxTopPositionField) - minTopPositionField));
+            y = MIN_TOP_POSITION_FIELD + ((verticalPosition) / (ROWS) * ((MAX_TOP_POSITION_FIELD) - MIN_TOP_POSITION_FIELD));
         }
         return y;
     }
@@ -71,7 +68,7 @@ public class Pictures {
                 count++;
             }
         }
-        assert count == (cols * rows);
+        assert count == (COLS * ROWS);
     }
 
     public void makeFieldsInvisible() {
