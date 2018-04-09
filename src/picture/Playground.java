@@ -41,7 +41,6 @@ public class Playground {
         this.inGame = true;
         this.surface = picture;
         this.picture = picture;
-        this.images = Arrays.asList(ImageSplit.loadImages());
         this.pictures = new Pictures(this);
         this.pictures.addPlayingField();
         this.gameService = new PictureGameService(Pictures.fields);
