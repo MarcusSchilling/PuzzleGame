@@ -1,5 +1,5 @@
 # PuzzleGame
-A Puzzle Game made up off custom pictures. TRY IT!!!
+A Puzzle Game made up off custom pictures. TRY IT!!! The project was developed within the scope of a school project.
 ## Instructions: 
 The game is based on a quadratic field of quadratic image parts.  
 You must bring the Picture parts to the correct positions means change the shuffled picture parts back to the original position. 
