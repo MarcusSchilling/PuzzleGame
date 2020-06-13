@@ -1,12 +1,11 @@
 # PuzzleGame
 A Puzzle Game made up off custom pictures. TRY IT!!! The project was developed within the scope of a school project.
-## Instructions: 
-The game is based on a quadratic field of quadratic image parts.  
-You must bring the Picture parts to the correct positions means change the shuffled picture parts back to the original position. 
-For this you can press a button on the corners which effects a move in the direction from the row or column.
 
+## Instructions: 
+ At the beginning of the game the picture is divided into w x h fields and then shuffled. The goal of the game is to move the picture parts back to the correct positions.  To do this, you can press a button at the corners that causes a shift in the direction of the row or column of the pictures.
+ 
 ## Customize
-You can choose a picture from your own pictures. If you want to change the picture after you won just go on the text box at the bottom and press F1. Or type in the textbox a correct picture path.
+You can use your own image for the game. If you want to change the image after you have won, just go to the text field below the image and press F1. Then a selection window appears in which you can choose your image. You can also manually enter the image path in the text box.
 Constants.java is for customization purposes.
 
 And now have fun!
